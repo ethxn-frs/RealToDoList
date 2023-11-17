@@ -13,6 +13,7 @@ public class User {
 
     public static int MIN_AGE = 13;
 
+    private Integer id;
     private String email;
     private String password;
     private String fName;
