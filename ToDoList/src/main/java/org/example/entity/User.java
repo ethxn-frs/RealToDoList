@@ -1,12 +1,15 @@
 package org.example.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.validator.EmailValidator;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
+@Getter
 @Setter
 @Builder
 public class User {
@@ -18,7 +21,7 @@ public class User {
     private String password;
     private String fName;
     private String lName;
-    private LocalDate bdate;
+    private LocalDateTime bdate;
     private ToDoList toDoList;
 
     public boolean isValid() {
@@ -27,7 +30,7 @@ public class User {
                 && this.fName != " "
                 && this.lName != null
                 && this.lName != " "
-                && LocalDate.now().minusYears(MIN_AGE).isAfter(this.bdate)
+                && LocalDateTime.now().minusYears(MIN_AGE).isAfter(this.bdate)
                 && isPasswordValid();
     }
 

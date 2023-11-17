@@ -1,42 +1,33 @@
 package org.example.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Item {
+
+    private Integer id;
     private String name;
     private String content;
-    private Date creationDate;
+    private LocalDateTime creationDate;
     private static final int MAX_LENGTH = 1000;
-    private static final long TIME_BETWEEN_ITEMS = 30 * 60 * 1000;
-
 
     public Item(String name, String content) {
         this.name = name;
         this.content = content;
-        this.creationDate = new Date();
+        this.creationDate = LocalDateTime.now();
     }
 
     public boolean isValid() {
         return isNameValid()
-                && isContentValid()
-                && isCreationDateValid();
+                && isContentValid();
     }
 
     private boolean isNameValid() {
         return this.name != null && !this.name.trim().isEmpty();
     }
-
     private boolean isContentValid() {
-        return this.content != null && this.content.length() <= MAX_LENGTH;
-    }
-
-    private boolean isCreationDateValid() {
-
-        long currentTime = System.currentTimeMillis();
-        long itemCreationTime = this.creationDate.getTime();
-        long timeDifference = currentTime - itemCreationTime;
-
-        return timeDifference >= TIME_BETWEEN_ITEMS;
+        return this.content != null
+                && this.content.length() <= MAX_LENGTH
+                && !this.content.trim().isEmpty();
     }
 
     public String getName() {
@@ -55,12 +46,20 @@ public class Item {
         this.content = content;
     }
 
-    public Date getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
 }
