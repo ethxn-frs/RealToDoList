@@ -3,7 +3,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.validator.EmailValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.apache.commons.validator.EmailValidator;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,6 +14,9 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 public class User {
+
+    @Autowired
+    EmailSenderService emailSenderService;
 
     public static int MIN_AGE = 13;
 
@@ -25,13 +29,19 @@ public class User {
     private ToDoList toDoList;
 
     public boolean isValid() {
-        return EmailValidator.getInstance().isValid(this.email)
-                && this.fName != null
+        return //EmailValidator.getInstance().isValid(this.email)
+                 this.fName != null
                 && this.fName != " "
                 && this.lName != null
                 && this.lName != " "
                 && LocalDateTime.now().minusYears(MIN_AGE).isAfter(this.bdate)
                 && isPasswordValid();
+    }
+
+    private void sendEmailToUser() {
+
+        if ( this.toDoList.getItemsList().size() >= 8)
+        emailSenderService.sendEmail(this.email, "Objet : ", "contenu");
     }
 
     private boolean isPasswordValid() {

@@ -21,10 +21,10 @@ public class Item {
                 && isContentValid();
     }
 
-    private boolean isNameValid() {
+    public boolean isNameValid() {
         return this.name != null && !this.name.trim().isEmpty();
     }
-    private boolean isContentValid() {
+    public boolean isContentValid() {
         return this.content != null
                 && this.content.length() <= MAX_LENGTH
                 && !this.content.trim().isEmpty();

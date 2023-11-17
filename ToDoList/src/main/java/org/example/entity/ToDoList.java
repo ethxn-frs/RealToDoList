@@ -20,26 +20,24 @@ public class ToDoList {
     private String name;
     private List<Item> itemsList;
 
-
-    public void saveItem(Item item) {
+    public boolean saveItem(Item item) {
         if ( itemsList.size() >= 10){
             System.out.println("La liste a déjà 10 items. Impossible d'ajouter un nouvel item.");
-            return;
-        }
-        if ( itemsList.size() >= 8){
-            //emailService
+            return false;
         }
         for ( Item i : itemsList){
             if (Objects.equals(i.getName(), item.getName())){
                 System.out.println("Un item dans la liste à déja ce nom.");
-                return;
+                return false;
             }
-            if ( ChronoUnit.MINUTES.between(i.getCreationDate(), LocalDateTime.now()) <= 30){
+            if ( ChronoUnit.MINUTES.between(item.getCreationDate(), i.getCreationDate()) < 30){
                 System.out.println("Un item a déjà été enregistré il y a moins de 30 minutes.");
-                return;
+                return false;
             }
         }
         itemsList.add(item);
         System.out.println("L'item a bien été ajouté.");
+        return true;
     }
+
 }
